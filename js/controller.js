@@ -4,6 +4,7 @@
     function MirrorCtrl(AnnyangService, GeolocationService, WeatherService, MapService, HueService, $scope, $timeout) {
         var _this = this;
         var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
+        var Moment = require('moment-timezone');
         $scope.listening = false;
         $scope.debug = false;
         $scope.complement = "Hey, Ms R!"
@@ -16,12 +17,14 @@
         //Update the time
         var tick = function() {
             $scope.date = new Date();
+            $scope.dateIST = Moment.tz("Asia/Colombo").format('hh:mm A');
+            $scope.dateGMT = Moment.tz("Europe/London").format('hh:mm A');
             $timeout(tick, 1000 * 60);
         };
 
         // Reset the command text
         var restCommand = function(){
-          $scope.interimResult = DEFAULT_COMMAND_TEXT;
+            $scope.interimResult = DEFAULT_COMMAND_TEXT;
         }
 
         _this.init = function() {
@@ -121,7 +124,6 @@
 
             // Change name
             AnnyangService.addCommand('My (name is)(name\'s) *name', function(name) {
-                console.debug("Hi", name, "nice to meet you");
                 $scope.user.name = "Hi " +name+ ", nice to meet you. You look fantastic today. :)";
                 $scope.focus = "name";
             });
@@ -138,14 +140,20 @@
 
             // Clear log of commands
             AnnyangService.addCommand('Clear results', function(task) {
-                 console.debug("Clearing results");
-                 _this.clearResults()
+                console.debug("Clearing results");
+                _this.clearResults()
             });
 
             // Check the time
             AnnyangService.addCommand('what time is it', function(task) {
-                 console.debug("It is", moment().format('h:mm:ss a'));
-                 _this.clearResults();
+                $scope.showTimeDate = "It is " + Moment().format('hh:mm A');
+                _this.clearResults();
+            });
+
+            // Check the date
+            AnnyangService.addCommand('what (day)/(date) is it', function(task) {
+                $scope.showTimeDate = "It is " + Moment().format('dddd, MMMM Do YYYY');
+                _this.clearResults();
             });
 
             // Turn lights off

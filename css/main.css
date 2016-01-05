@@ -74,7 +74,11 @@ dt {
 }
 
 .time {
-    font-size: 110px;
+    font-size: 70px;
+}
+
+.time-sub {
+    font-size: 35px;
 }
 
 .top-right {
