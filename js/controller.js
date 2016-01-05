@@ -6,7 +6,7 @@
         var DEFAULT_COMMAND_TEXT = 'Say "What can I say?" to see a list of commands...';
         $scope.listening = false;
         $scope.debug = false;
-        $scope.complement = "Hi, sexy!"
+        $scope.complement = "Hey, Ms R!"
         $scope.focus = "default";
         $scope.user = {};
         $scope.interimResult = DEFAULT_COMMAND_TEXT;
@@ -39,7 +39,7 @@
                     console.log("Current", $scope.currentForcast);
                     console.log("Weekly", $scope.weeklyForcast);
                     //refresh the weather every hour
-                    //this doesn't acutually updat the UI yet
+                    //this doesn't actually updat the UI yet
                     //$timeout(WeatherService.refreshWeather, 3600000);
                 });
             })
@@ -80,6 +80,7 @@
             // Hide everything and "sleep"
             AnnyangService.addCommand('Show map', function() {
                 console.debug("Going on an adventure?");
+                $scope.map = MapService.generateMap('Seattle');
                 $scope.focus = "map";
             });
 
@@ -115,12 +116,14 @@
             // Search images
             AnnyangService.addCommand('Show me *term', function(term) {
                 console.debug("Showing", term);
+
             });
 
             // Change name
             AnnyangService.addCommand('My (name is)(name\'s) *name', function(name) {
                 console.debug("Hi", name, "nice to meet you");
-                $scope.user.name = name;
+                $scope.user.name = "Hi " +name+ ", nice to meet you. You look fantastic today. :)";
+                $scope.focus = "name";
             });
 
             // Set a reminder

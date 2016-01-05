@@ -32,14 +32,15 @@
       <div class="top-right">
         <div class="weather">
           <div class="weather-today">
-            <span class="tempreture">{{currentForcast.temperature}}&deg;</span>
+              <span class="tempreture">Feels like: {{currentForcast.apparentTemperature}}&deg;C </span>
+              <span class="tempreture">Actual Temp: {{currentForcast.temperature}}&deg;C </span>
           </div>
           <div class="weather-week-descriptor">{{weeklyForcast.summary}}</div>
           <div class="weather-week" ng-repeat="forcast in weeklyForcast.data" ng-if="$index > 0">
             <div class="weather-week-day">
               <span class="day light-grey">{{forcast.day}}</span>
-              <span class="tempreture tempreture-min">{{forcast.temperatureMin}}</span>
-              <span class="tempreture tempreture-max">{{forcast.temperatureMax}}</span>
+              <span class="tempreture tempreture-max">{{forcast.temperatureMax}}&deg;C</span>
+                <span class="tempreture tempreture-min">{{forcast.temperatureMin}}&deg;C</span>
             </div>
           </div>
         </div>
